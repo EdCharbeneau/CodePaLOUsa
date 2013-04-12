@@ -4,3 +4,4 @@
 *.jar
 *.war
 *.ear
+/2013/LocalStorageSecurity/portal/nbproject/private/
