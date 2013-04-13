@@ -3,3 +3,4 @@
 # for the various usecases in the demo.
 ## 
 127.0.0.1 robinhood.com nottingham.com myappserver.com robinhood.myappserver.com nottingham.myappserver.com secured1.myappserver.com secured2.myappserver.com portal.myappserver.com
+::1 robinhood.com nottingham.com myappserver.com robinhood.myappserver.com nottingham.myappserver.com secured1.myappserver.com secured2.myappserver.com portal.myappserver.com
