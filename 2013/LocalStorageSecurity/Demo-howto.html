@@ -1,5 +1,8 @@
 <html>
-
+<h3>Instructions on how to set up Tomcat to run this demonstration</h3>
+<p>
+Once set up, the following steps will demonstrate issues with local storage when multiple applications share the same origin.  It will show possible issues when cookie based SSO applications have different origins (hostnames).  It will finally show how to make those SSO applications interoperate by setting a common domain for the SSO cookie.
+</p>
 <OL>
 <LI>Get tomcat from Apache at <a href="http://tomcat.apache.org/index.html">http://tomcat.apache.org/index.html</a></LI>
 
@@ -24,9 +27,10 @@
 <LI>Demo 3 and 4: open the following in separate browser tabs:
 <UL>
 <LI><a href="http://robinhood.myappserver.com:8080/robinhood/" target="robinhood">http://robinhood.myappserver.com:8080/robinhood</a></LI>
-<LI><a href="http://myappserver.com:8080/nottingham" target="nottingham">http://nottingham.myappserver.com:8080/nottingham</a></LI><LI><a href="http://portal.myappserver.com:8080/portal2" target="nottingham">http://portal.myappserver.com:8080/portal2</a> User name and password: <tt>tomcat</tt></LI></UL>Part 3: Actions in notting tab do not effect robinhood tab.  Part 4: edit server.xml and change SSO to use domain cookie.  All applications will work correctly.  Yay!</LI>
-
-
+<LI><a href="http://myappserver.com:8080/nottingham" target="nottingham">http://nottingham.myappserver.com:8080/nottingham</a></LI><LI><a href="http://portal.myappserver.com:8080/portal2" target="nottingham">http://portal.myappserver.com:8080/portal2</a> User name and password: <tt>tomcat</tt></LI></UL>Demo 3: Actions in notting tab do not effect robinhood tab. <br/>Demo 4: Edit server.xml and change SSO to use domain cookie.  All applications will work correctly.  Yay!</LI>
 </OL>
+<p>
+Disclaimer: These demonstrations show the effect that changes in an origin can have on the security of local storage and Single Sign On.  They do not show overall good security practice.
+</p>
 
 </html>
