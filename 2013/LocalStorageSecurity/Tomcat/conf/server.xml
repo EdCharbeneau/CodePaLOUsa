@@ -100,7 +100,7 @@
     <!-- You should set jvmRoute to support load-balancing via AJP ie :
     <Engine name="Catalina" defaultHost="localhost" jvmRoute="jvm1">
     -->
-    <Engine name="Catalina" defaultHost="myappserver.com">
+    <Engine name="Catalina" defaultHost="localhost">
 
       <!--For clustering, please take a look at documentation at:
           /docs/cluster-howto.html  (simple how to)
@@ -148,8 +148,15 @@
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
 	
-        <Valve className="org.apache.catalina.authenticator.SingleSignOn"/>
+                <Alias>robinhood.myappserver.com</Alias>
+                <Alias>nottingham.myappserver.com</Alias>
+                <Alias>secured1.myappserver.com</Alias>
+                <Alias>secured2.myappserver.com</Alias>
+                <Alias>portal.myappserver.com</Alias>        
+
+                <Valve className="org.apache.catalina.authenticator.SingleSignOn"/>
 	<!--
+        ***** Uncomment this and comment out the above SingleSignOn valve *****
         <Valve className="org.apache.catalina.authenticator.SingleSignOn" cookieDomain="myappserver.com"/>
 	-->
 
@@ -157,7 +164,36 @@
              Documentation at: /docs/config/valve.html
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
-               prefix="localhost_access_log." suffix=".txt"
+               prefix="myappserver_access_log." suffix=".txt"
+               pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+
+      </Host>
+      <Host name="fixedappserver.com"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true">
+
+	<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+                allow="127\.0\.0\.1"/>
+
+                <Alias>robinhood.fixedappserver.com</Alias>
+                <Alias>nottingham.fixedappserver.com</Alias>
+                <Alias>secured1.fixedappserver.com</Alias>
+                <Alias>secured2.fixedappserver.com</Alias>
+                <Alias>portal.fixedappserver.com</Alias>        
+        
+        <!-- SingleSignOn valve, share authentication between web applications
+             Documentation at: /docs/config/valve.html -->
+	
+        <Valve className="org.apache.catalina.authenticator.SingleSignOn" cookieDomain="fixedappserver.com"/>
+	<!--
+        ***** Uncomment this and comment out the above SingleSignOn valve *****
+        <Valve className="org.apache.catalina.authenticator.SingleSignOn"/>
+	-->
+
+        <!-- Access log processes all example.
+             Documentation at: /docs/config/valve.html
+             Note: The pattern used is equivalent to using pattern="common" -->
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+               prefix="fixedappserver_access_log." suffix=".txt"
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
 
       </Host>

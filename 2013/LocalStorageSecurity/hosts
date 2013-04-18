@@ -1,6 +1,7 @@
-
 # Add this line to your hosts file for the demo.  It defines all of the hosts necessary
 # for the various usecases in the demo.
-## 
-127.0.0.1 robinhood.com nottingham.com myappserver.com robinhood.myappserver.com nottingham.myappserver.com secured1.myappserver.com secured2.myappserver.com portal.myappserver.com
-::1 robinhood.com nottingham.com myappserver.com robinhood.myappserver.com nottingham.myappserver.com secured1.myappserver.com secured2.myappserver.com portal.myappserver.com
+
+127.0.0.1 robinhood.com nottingham.com 
+127.0.0.1 myappserver.com robinhood.myappserver.com nottingham.myappserver.com secured1.myappserver.com secured2.myappserver.com portal.myappserver.com
+127.0.0.1 fixedappserver.com robinhood.fixedappserver.com nottingham.fixedappserver.com secured1.fixedappserver.com secured2.fixedappserver.com portal.fixedappserver.com 
+

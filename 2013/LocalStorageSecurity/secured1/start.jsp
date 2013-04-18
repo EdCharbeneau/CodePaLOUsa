@@ -10,6 +10,6 @@ and open the template in the editor.
     </head>
     <body>
         <h1>Secured 1 Application</h1>
-        <a href="../portal">Return to Portal</a>
+        <a href="http://${param.portalHost}:8080/${param.portalName}">Return to Portal</a>
     </body>
 </html>
