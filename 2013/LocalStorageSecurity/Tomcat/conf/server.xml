@@ -120,11 +120,13 @@
                resourceName="UserDatabase"/>
       </Realm>
 
-      <Host name="localhost"  appBase="webapps"
-            unpackWARs="true" autoDeploy="true">
-
+        <!-- ********** Restrict Access to localhost *************-->
 	<Valve className="org.apache.catalina.valves.RemoteAddrValve"
                 allow="127\.0\.0\.1"/>
+
+
+      <Host name="localhost"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true">
 
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
@@ -139,26 +141,44 @@
 
       </Host>
 
-      <Host name="myappserver.com"  appBase="webapps"
+      <!-- **************************************************************
+        Virtual host for the applications running under the 
+      "myappserver.mydomain.com" server.
+           ************************************************************** -->
+      <Host name="myappserver.mydomain.com"  appBase="webapps"
             unpackWARs="true" autoDeploy="true">
 
-	<Valve className="org.apache.catalina.valves.RemoteAddrValve"
-                allow="127\.0\.0\.1"/>
+                <Valve className="org.apache.catalina.authenticator.SingleSignOn"/>
 
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
 	
-                <Alias>robinhood.myappserver.com</Alias>
-                <Alias>nottingham.myappserver.com</Alias>
-                <Alias>secured1.myappserver.com</Alias>
-                <Alias>secured2.myappserver.com</Alias>
-                <Alias>portal.myappserver.com</Alias>        
+        <!-- Access log processes all example.
+             Documentation at: /docs/config/valve.html
+             Note: The pattern used is equivalent to using pattern="common" -->
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+               prefix="myappserver_access_log." suffix=".txt"
+               pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+
+      </Host>
+      
+      <!-- **************************************************************
+        Virtual host for applications running under subdomains of myappserver
+        with each subdomain aliased to the server.
+           ************************************************************** -->
+      <Host name="portal.myappserver.mydomain.com"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true">
 
                 <Valve className="org.apache.catalina.authenticator.SingleSignOn"/>
-	<!--
-        ***** Uncomment this and comment out the above SingleSignOn valve *****
-        <Valve className="org.apache.catalina.authenticator.SingleSignOn" cookieDomain="myappserver.com"/>
-	-->
+
+        <!-- SingleSignOn valve, share authentication between web applications
+             Documentation at: /docs/config/valve.html -->
+	
+        <!-- Each subdomain must be listed -->
+                <Alias>robinhood.myappserver.mydomain.com</Alias>
+                <Alias>nottingham.myappserver.mydomain.com</Alias>
+                <Alias>secured1.myappserver.mydomain.com</Alias>
+                <Alias>secured2.myappserver.mydomain.com</Alias>
 
         <!-- Access log processes all example.
              Documentation at: /docs/config/valve.html
@@ -168,22 +188,27 @@
                pattern="%h %l %u %t &quot;%r&quot; %s %b" />
 
       </Host>
-      <Host name="fixedappserver.com"  appBase="webapps"
+      
+      <!-- **************************************************************
+       Virtual host for the applications running under the 
+       "fixedappserver.mydomain.com" server, as well as the subdomains running under it.
+           ************************************************************** -->
+      <Host name="fixedappserver.mydomain.com"  appBase="webapps"
             unpackWARs="true" autoDeploy="true">
 
-	<Valve className="org.apache.catalina.valves.RemoteAddrValve"
-                allow="127\.0\.0\.1"/>
-
-                <Alias>robinhood.fixedappserver.com</Alias>
-                <Alias>nottingham.fixedappserver.com</Alias>
-                <Alias>secured1.fixedappserver.com</Alias>
-                <Alias>secured2.fixedappserver.com</Alias>
-                <Alias>portal.fixedappserver.com</Alias>        
+        <!-- Each subdomain must be listed -->
+                <Alias>robinhood.fixedappserver.mydomain.com</Alias>
+                <Alias>nottingham.fixedappserver.mydomain.com</Alias>
+                <Alias>secured1.fixedappserver.mydomain.com</Alias>
+                <Alias>secured2.fixedappserver.mydomain.com</Alias>
+                <Alias>portal.fixedappserver.mydomain.com</Alias>        
         
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
-	
-        <Valve className="org.apache.catalina.authenticator.SingleSignOn" cookieDomain="fixedappserver.com"/>
+        <!-- Note: This valve defines a cookie domain.  This makes it so that SSO
+        works between the various subdomains of this virtual host.-->
+        <Valve className="org.apache.catalina.authenticator.SingleSignOn" 
+               cookieDomain="fixedappserver.mydomain.com"/>
 	<!--
         ***** Uncomment this and comment out the above SingleSignOn valve *****
         <Valve className="org.apache.catalina.authenticator.SingleSignOn"/>
